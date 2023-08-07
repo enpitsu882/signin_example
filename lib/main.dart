@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void main() => runApp(const SignUpApp());
 
 class SignUpApp extends StatelessWidget {
-  const SignUpApp();
+  const SignUpApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class SignUpApp extends StatelessWidget {
 }
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen();
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
 }
 
 class SignUpForm extends StatefulWidget {
-  const SignUpForm();
+  const SignUpForm({super.key});
 
   @override
   State<SignUpForm> createState() => _SignUpFormState();
@@ -127,13 +127,14 @@ class _SignUpFormState extends State<SignUpForm> {
 }
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen();
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Welcome!', style: Theme.of(context).textTheme.displayMedium),
+        child:
+            Text('Welcome!', style: Theme.of(context).textTheme.displayMedium),
       ),
     );
   }
@@ -143,6 +144,7 @@ class AnimatedProgressIndicator extends StatefulWidget {
   final double value;
 
   const AnimatedProgressIndicator({
+    super.key,
     required this.value,
   });
 
@@ -152,7 +154,8 @@ class AnimatedProgressIndicator extends StatefulWidget {
   }
 }
 
-class _AnimatedProgressIndicatorState extends State<AnimatedProgressIndicator> with SingleTickerProviderStateMixin {
+class _AnimatedProgressIndicatorState extends State<AnimatedProgressIndicator>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Color?> _colorAnimation;
   late Animation<double> _curveAnimation;
@@ -160,12 +163,18 @@ class _AnimatedProgressIndicatorState extends State<AnimatedProgressIndicator> w
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: Duration(milliseconds: 1200), vsync: this);
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 1200), vsync: this);
 
     final colorTween = TweenSequence([
-      TweenSequenceItem(tween: ColorTween(begin: Colors.red, end: Colors.orange), weight: 1),
-      TweenSequenceItem(tween: ColorTween(begin: Colors.orange, end: Colors.yellow), weight: 1),
-      TweenSequenceItem(tween: ColorTween(begin: Colors.yellow, end: Colors.green), weight: 1),
+      TweenSequenceItem(
+          tween: ColorTween(begin: Colors.red, end: Colors.orange), weight: 1),
+      TweenSequenceItem(
+          tween: ColorTween(begin: Colors.orange, end: Colors.yellow),
+          weight: 1),
+      TweenSequenceItem(
+          tween: ColorTween(begin: Colors.yellow, end: Colors.green),
+          weight: 1),
     ]);
 
     _colorAnimation = _controller.drive(colorTween);
@@ -181,12 +190,11 @@ class _AnimatedProgressIndicatorState extends State<AnimatedProgressIndicator> w
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) => LinearProgressIndicator(
-        value: _curveAnimation.value,
-        valueColor: _colorAnimation,
-        backgroundColor: _colorAnimation.value?.withOpacity(0.4),
-      )
-    );
+        animation: _controller,
+        builder: (context, child) => LinearProgressIndicator(
+              value: _curveAnimation.value,
+              valueColor: _colorAnimation,
+              backgroundColor: _colorAnimation.value?.withOpacity(0.4),
+            ));
   }
 }
